@@ -1,44 +1,24 @@
 # MT5 Telegram Alerting
 
-A simple program that integrates with MetaTrader 5 (MT5) to alert a Telegram group about entries.
-
-## Features
-
-- Alerts for new entries
-- Alerts for partial closures
-- Alerts for full closures
-- Supports multiple entries BUT one symbol at a time. This can be changed but is not suitable for my usage
-
-## Requirements
-
-- Python
-- uv package manager
-- MetaTrader 5
-- Telegram group, bot token and chat ID (ask ChatGPT to set that up)
+Script that alerts a Telegram group of opened, closed, partially closed and break evened MT5 entries.
 
 ## Setup & Usage
 
-1. Create a credentials YAML file with your Telegram bot&group and MT5 account details:
+1. Modify app/config.py with Telegram bot&group and MT5 account details:
 
-```yaml
-TELEGRAM_BOT_TOKEN: "123456789:AAAbbbCCCdddEEEfffGGGhhhIIIjjjKKKlllMMM"
-TELEGRAM_CHAT_ID: -611111111111
-ACCOUNT_NUMBER: 91111111
-ACCOUNT_PASSWORD: "81111111"
-ACCOUNT_SERVER: "FTMO-Demo"
-SYMBOL: "EURUSD"
+```python
+MT5_NUMBER = 9999999999
+MT5_PASSWORD = "XXXXXXXXX"
+MT5_SERVER = "XXXXXXXXXXX"
+TELEGRAM_BOT_TOKEN = "123456789:AAAbbbCCCdddEEEfffGGGhhhIIIjjjKKKlllMMM"
+TELEGRAM_CHAT_ID = "-999999999"
 ```
 
-2. Install dependencies:
-    ```bash
-    uv sync
-    ```
+2. Modify app's logging as well as app/config.py Telegram messages to suit your needs
 
-2. Compile `main.py` using [PyInstaller](https://pyinstaller.org/):
-   ```bash
-   pyinstaller --onefile main.py
-   ```
-3. Run the compiled executable.
+3. Run main.py
+
+I suggest to use a Windows 11 VPS with Python3 and MetaTrader5 terminal installed for high availability.
 
 ## Developer Info
 
@@ -73,6 +53,7 @@ TradePosition(
 #### Example: Partial Closure
 
 Before:
+
 ```python
 TradePosition(
     ticket=67531693,
@@ -82,7 +63,9 @@ TradePosition(
     ...
 )
 ```
+
 After:
+
 ```python
 TradePosition(
     ticket=67531693,
@@ -94,7 +77,7 @@ TradePosition(
 ```
 
 ### Note
+
 Status of a closed position is an aproximation with the last tick info. MT5 won't allow you access
 to closed positions' details immediately when they close, so the status is based on the last known tick data and to which
-point it's the closest to (TP, SL or BE). This is the reason why there's faulty results for fully closed positions without
-reaching TP or SL. Which you shouldn't be doing anyway ;)
+point it's the closest to (TP, SL or BE).
