@@ -1,9 +1,0 @@
-[project]
-name = "telegram-alerting"
-version = "0.1.0"
-description = "Telegram MT5 positions alerter"
-readme = "README.md"
-requires-python = ">=3.13"
-dependencies = [
-    "metatrader5>=5.0.5120",
-]
